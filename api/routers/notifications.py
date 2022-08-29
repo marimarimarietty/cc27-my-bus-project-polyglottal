@@ -1,6 +1,10 @@
 from typing import List
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+from sqlalchemy.ext.asyncio import AsyncSession
 import api.schemas.notifications as notifications_schema
+
+import api.cruds.notifications as notifi_crud
+from api.db import get_db
 
 router = APIRouter()
 
@@ -10,8 +14,10 @@ async def list_notification():
 
 
 @router.post("/notifications", response_model=notifications_schema.NotifiCreateResponse)
-async def create_notifications(notifi_body: notifications_schema.NotifiCreate):
-    return notifications_schema.NotifiCreateResponse(id=1, **notifi_body.dict())
+async def create_notifications(
+  notifi_body: notifications_schema.NotifiCreate, db: AsyncSession = Depends(get_db)
+):
+  return await notifi_crud.create_notifications(db, notifi_body)
 
 
 @router.patch("/notifications/{busanduser_id}", response_model=notifications_schema.NotifiCreateResponse)

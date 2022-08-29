@@ -8,7 +8,7 @@ class NotifiBase(BaseModel):
     direction: Optional[str] = Field(None, example="3")
     busstop: Optional[str] = Field(None, example="odpt.BusstopPole:Toei.NipponKagakuMiraikan.2546.2")
     busid: Optional[str] = Field(None, example="odpt.Bus:Toei.NM01.4601.2.T280")
-    userid: Optional[str] = Field(None, example="1")
+    userid: Optional[int] = Field(None, example=1)
     busanduserid: Optional[str] = Field(None, example="odpt.Bus:Toei.NM01.4601.2.T2801")
 
 class NotifiCreate(NotifiBase):
