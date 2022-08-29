@@ -6,4 +6,18 @@ services:
       - .dockervenv:/src/.venv
       - .:/src
     ports:
-      - 8000:8000
+      - 8000:8000 # connect host machine to docker
+  db:
+    image: mysql:8.0
+    platform: linux/x86_64  # required to M1 Mac
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'  # create root accout without password
+      MYSQL_DATABASE: 'bus'  # initial database as bus
+      TZ: 'Asia/Tokyo'  # set up Japan timezone
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password  # need to change it because driver does not support in MySQL8.0 Myssql default is "caching_sha2_password".
+    ports:
+      - 33306:3306  # connect host machine to docker
+volumes:
+  mysql_data:
