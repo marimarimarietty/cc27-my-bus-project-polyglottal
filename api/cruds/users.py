@@ -29,3 +29,28 @@ async def list_users(db: AsyncSession) -> List[Tuple[int, str]]:
         )
     )
     return result.all()
+
+# update user
+async def get_user(db: AsyncSession, user_id: int) -> Optional[user_model.User]:
+    result: Result = await db.execute(
+        select(user_model.User).filter(user_model.User.id == user_id)
+    )
+    user: Optional[Tuple[user_model.User]] = result.first()
+    return user[0] if user is not None else None
+
+
+async def update_user(
+    db: AsyncSession, user_create: user_schema.UserCreate, original: user_model.User
+) -> user_model.User:
+    original.name = user_create.name
+    original.email = user_create.email
+    original.password = user_create.password
+    db.add(original)
+    await db.commit()
+    await db.refresh(original)
+    return original
+
+# delete user
+async def delete_user(db: AsyncSession, original: user_model.User) -> None:
+    await db.delete(original)
+    await db.commit()
