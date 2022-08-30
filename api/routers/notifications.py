@@ -8,9 +8,10 @@ from api.db import get_db
 
 router = APIRouter()
 
+
 @router.get("/notifications", response_model=List[notifications_schema.Notifications])
-async def list_notification():
-  return [notifications_schema.Notifications(id=1, busroute="odpt.Busroute:Toei.NM01", direction="3", busstop="odpt.BusstopPole:Toei.NipponKagakuMiraikan.2546.2", busid="odpt.Bus:Toei.NM01.4601.2.T280", userid="1", busanduserid="odpt.Bus:Toei.NM01.4601.2.T2801")]
+async def list_notification(db: AsyncSession = Depends(get_db)):
+    return await notifi_crud.get_notifications(db)
 
 
 @router.post("/notifications", response_model=notifications_schema.NotifiCreateResponse)

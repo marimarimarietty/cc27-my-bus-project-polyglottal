@@ -22,7 +22,7 @@ class NotifiCreateResponse(NotifiCreate):
 
 class Notifications(NotifiBase):
     id: int
-    done: bool = Field(False, description="flag")
+    done: int = Field(0, description="flag")
 
     class Config:
       orm_mode = True
