@@ -8,7 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.engine import Result
 
 
-async def create_notifications(
+async def create_notification(
     db: AsyncSession, notifi_create: notifi_schema.NotifiCreate
 ) -> notifi_model.Notifications:
     notifi = notifi_model.Notifications(**notifi_create.dict())
@@ -28,6 +28,7 @@ async def list_notifications(db: AsyncSession) -> List[Tuple[int, str]]:
                 notifi_model.Notifications.busstop,
                 notifi_model.Notifications.busid,
                 notifi_model.Notifications.userid,
+                notifi_model.Notifications.done,
             )
         )
     )
@@ -50,3 +51,8 @@ async def update_notification(
     await db.commit()
     await db.refresh(original)
     return original
+
+# delete notification
+async def delete_notification(db: AsyncSession, original: notifi_model.Notifications) -> None:
+    await db.delete(original)
+    await db.commit()
