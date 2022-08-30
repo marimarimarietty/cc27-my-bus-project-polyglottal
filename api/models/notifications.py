@@ -13,7 +13,6 @@ class Notifications(Base):
     busstop = Column(String(1024))
     busid = Column(String(1024))
     userid = Column(Integer, ForeignKey("users.id"))
-    busanduserid = Column(String(1024))
     done = Column(Integer)
 
     user = relationship("User", back_populates="notifications")
