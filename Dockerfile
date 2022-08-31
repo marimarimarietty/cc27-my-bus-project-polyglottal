@@ -16,4 +16,4 @@ RUN if [ -f pyproject.toml ]; then poetry install; fi
 
 # run server uvicorn
 ENTRYPOINT ["uvicorn"]
-CMD uvicorn api.main:app --host 0.0.0.0 --port 6565
+CMD uvicorn api.main:app --host 0.0.0.0 --port $PORT
