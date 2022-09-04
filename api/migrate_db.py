@@ -2,8 +2,13 @@ from sqlalchemy import create_engine
 
 from api.models.notifications import Base
 
-DB_URL = "mysql+pymysql://root@db:3306/bus?charset=utf8"
-engine = create_engine(DB_URL, echo=True)
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+ASYNC_DB_URL = os.environ['ASYNC_DB_URL']
+
+engine = create_engine(ASYNC_DB_URL, echo=True)
 
 
 def reset_database():
