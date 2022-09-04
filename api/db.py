@@ -1,7 +1,11 @@
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-ASYNC_DB_URL = "mysql+aiomysql://root@db:3306/bus?charset=utf8"
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+ASYNC_DB_URL = os.environ['ASYNC_DB_URL']
 
 
 async_engine = create_async_engine(ASYNC_DB_URL, echo=True)
