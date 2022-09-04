@@ -16,9 +16,9 @@ async def list_notifications(db: AsyncSession = Depends(get_db)):
 
 @router.post("/notifications", response_model=notifications_schema.NotifiCreateResponse)
 async def create_notification(
-  notifi_body: notifications_schema.NotifiCreate, db: AsyncSession = Depends(get_db)
+    notifi_body: notifications_schema.NotifiCreate, db: AsyncSession = Depends(get_db)
 ):
-  return await notifi_crud.create_notification(db, notifi_body)
+    return await notifi_crud.create_notification(db, notifi_body)
 
 
 @router.patch("/notifications/{notification_id}", response_model=notifications_schema.NotifiCreateResponse)
